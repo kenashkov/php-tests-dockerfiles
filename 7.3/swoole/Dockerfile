@@ -11,7 +11,7 @@ RUN apt-get update \
     && docker-php-ext-install -j$(nproc) mysqli \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
     && docker-php-ext-install -j$(nproc) opcache \
-    && pecl install redis-4.3.0 \
+    && pecl install redis \
     && pecl install mongodb \
     && pecl install swoole \
     && docker-php-ext-enable redis \

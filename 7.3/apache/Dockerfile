@@ -17,10 +17,12 @@ RUN apt-get update \
     && docker-php-ext-install -j$(nproc) mysqli \
     && docker-php-ext-install -j$(nproc) pdo_mysql \
     && docker-php-ext-install -j$(nproc) opcache \
-    && pecl install redis-4.3.0 \
+    && pecl install redis \
     && pecl install mongodb \
+    && pecl install apcu \
     && docker-php-ext-enable redis \
     && docker-php-ext-enable mongodb \
+    && docker-php-ext-enable apcu \
     && a2enmod rewrite \
     && sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf \
     && sed -i 's/Options FollowSymLinks/Options Indexes MultiViews FollowSymLinks/g' /etc/apache2/apache2.conf \
@@ -31,4 +33,7 @@ RUN apt-get update \
 RUN cd /root && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && php ./composer-setup.php && cp ./composer.phar /usr/bin/composer && rm ./composer-setup.php
 
 
+
+#update apache config
+COPY mpm_prefork.conf /etc/apache2/mods-available
 
